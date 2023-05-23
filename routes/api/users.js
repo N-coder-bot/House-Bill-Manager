@@ -6,6 +6,7 @@ const {
   getUsers,
   postUser,
   deleteUser,
+  updateUser,
 } = require("../../controllers/usercontroller");
 
 //1.getting all users.
@@ -18,21 +19,5 @@ router.post("/add", postUser);
 router.delete("/:name", deleteUser);
 
 //4. Updating email or username or password of a user.
-router.put("update/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  //add not found statement later...
-  const found = USERS.some((user) => user.id === parseInt(req.params.id));
-  if (found) {
-    USERS.forEach((user) => {
-      if (user.id === parseInt(req.params.id)) {
-        user.name = req.body.name ? req.body.name : user.name;
-        user.email = req.body.email ? req.body.email : user.email;
-        user.password = req.body.password ? req.body.password : user.password;
-        res.json({ msg: "user updated", user });
-      }
-    });
-  } else {
-    res.status(400).json({ msg: "user not found" });
-  }
-});
+router.put("/:name", updateUser);
 module.exports = router;
