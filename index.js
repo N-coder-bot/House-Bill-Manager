@@ -3,61 +3,27 @@ const app = express();
 const USERS = require("./Users");
 const moment = require("moment");
 
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
+
 const PORT = process.env.PORT || 8000;
+const uri =
+  "mongodb+srv://naman:D-QU-G3yG_jzSmJ@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority";
 
 //setting middlewares.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//Members Routes
+//connecting to mongodb database.
+mongoose.connect(uri);
+const connection = mongoose.connection;
+connection
+  .on("open", () => console.log("connected to mongodb"))
+  .on("close", () => console.log("disconnected!"))
+  .on("error", () => console.log("error"));
 
-//1.getting all customers.
-app.get("/api/users/get", (req, res) => {
-  res.status(200).json(USERS);
-});
-
-//2. adding a customer.
-app.post("/api/users/add", (req, res) => {
-  const createdAt = moment().format("MMMM Do YYYY, h:mm:ss a");
-  const user = {
-    ...req.body,
-    createdAt,
-  };
-  if (!email || !password)
-    res.status(400).json({ msg: "User must have an email and a password." });
-  else {
-    USERS.push(user);
-    res.status(200).json(USERS);
-  }
-});
-
-//3. deleting a customer (by id). should only be done by admin.
-app.delete("/api/users/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  //add not found statement later...
-  res.status(200).json({
-    users: USERS.filter((user) => user.id !== id),
-  });
-});
-//4. Updating email or username or password of a user.
-app.put("/api/users/update/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  //add not found statement later...
-  const found = USERS.some((user) => user.id === parseInt(req.params.id));
-  if (found) {
-    USERS.forEach((user) => {
-      if (user.id === parseInt(req.params.id)) {
-        user.name = req.body.name ? req.body.name : user.name;
-        user.email = req.body.email ? req.body.email : user.email;
-        user.password = req.body.password ? req.body.password : user.password;
-        res.json({ msg: "user updated", user });
-      }
-    });
-  } else {
-    res.status(400).json({ msg: "user not found" });
-  }
-  res.status(200).json({});
-});
+//User Routes
+app.use("/api/users", require("./routes/api/users"));
 
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
