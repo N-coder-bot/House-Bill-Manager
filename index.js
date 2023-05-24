@@ -3,8 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 8000;
-const uri =
-  "mongodb+srv://naman:D-QU-G3yG_jzSmJ@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://naman:${process.env.password}@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority`;
 
 //setting middlewares.
 app.use(express.json());
