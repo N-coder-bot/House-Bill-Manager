@@ -1,7 +1,4 @@
 const User = require("../models/User");
-const moment = require("moment");
-const passport = require("passport");
-const localStrategy = require("passport-local").Strategy;
 
 //read all users.
 const getUsers = async (req, res) => {
@@ -14,59 +11,9 @@ const getUsers = async (req, res) => {
 };
 
 //User Sign Up using Passport.js
-const postUser = async (req, res) => {
-  passport.use(
-    "signup",
-    new localStrategy(
-      {
-        usernameField: "email",
-        passwordField: "password",
-      },
-      async (email, password, done) => {
-        try {
-          const user = await User.create({
-            email,
-            password,
-            username: req.body.username,
-            createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
-          });
-          res.json(user);
-          return done(null, user);
-        } catch (err) {
-          res.status(400).json({ error: err });
-          done(err);
-        }
-      }
-    )
-  );
-};
+const postUser = async (req, res) => {};
 
 //User Login using Passport.js
-const userLogin = passport.use(
-  "login",
-  new localStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password",
-    },
-    async (email, password, done) => {
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          return done(null, false, { message: "User not found" });
-        }
-        const validate = await user.isValidPassword(password);
-        if (!validate) {
-          return done(null, false, { message: "Wrong Password" });
-        }
-        res.json({ user });
-        return done(null, user, { message: "Logged in Successfully!" });
-      } catch (err) {
-        return done(error);
-      }
-    }
-  )
-);
 //delete a user by name.
 const deleteUser = async (req, res) => {
   try {
