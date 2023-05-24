@@ -1,10 +1,6 @@
 const express = require("express");
 const app = express();
-const USERS = require("./Users");
-const moment = require("moment");
-
 const mongoose = require("mongoose");
-const { model, Schema } = mongoose;
 
 const PORT = process.env.PORT || 8000;
 const uri =
