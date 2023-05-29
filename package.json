@@ -2,10 +2,10 @@
   "name": "project1",
   "version": "1.0.0",
   "description": "A full stack application including signup login and authentication, also  stores a user's information on database, with their information.",
-  "main": "index.js",
+  "main": "demo.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,11 @@
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.10",
     "bcrypt": "^5.1.0",
+    "connect-mongo": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "mongoose": "^7.2.0",
