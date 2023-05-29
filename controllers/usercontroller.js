@@ -1,6 +1,33 @@
 const User = require("../models/User");
+const moment = require("moment");
 
-//read all users.
+//1. get userinfo.
+const userInfo = (req, res) => {
+  // console.log(req.user);
+  res.json({ user: req.user });
+};
+//2. render signup page.
+const signUpRender = (req, res) => {
+  res.render("signup");
+};
+//3. create user in the database.
+const createUser = async (req, res) => {
+  const user = await User.create({
+    ...req.body,
+    createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+  });
+  // console.log(user);
+  res.json({ user: user });
+};
+//4. render login page.
+const loginRender = (req, res) => {
+  res.render("login");
+};
+//5. redirect if successfully logged in.
+const success = (req, res) => {
+  res.redirect("/user");
+};
+//6. read all users.
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -9,12 +36,7 @@ const getUsers = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
-
-//User Sign Up using Passport.js
-const postUser = async (req, res) => {};
-
-//User Login using Passport.js
-//delete a user by name.
+//7. delete a user by username.
 const deleteUser = async (req, res) => {
   try {
     const user = await User.find({ username: req.params.name }).exec();
@@ -27,15 +49,13 @@ const deleteUser = async (req, res) => {
     res.status(400).json({ error: err });
   }
 };
-
-//update user's detail.
+//8. update user's detail.
 const updateUser = async (req, res) => {
   try {
     const user = await User.find({ username: req.params.name }).exec();
     if (user.length === 0) throw "user not found";
     //console.log(user);
     user[0].username = req.body.name ? req.body.name : user[0].username;
-    user[0].email = req.body.email ? req.body.email : user[0].email;
     user[0].password = req.body.password ? req.body.password : user[0].password;
     await user[0].save();
     res.json({ msg: "user details updated!", user: user[0] });
@@ -45,4 +65,13 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, postUser, deleteUser, updateUser };
+module.exports = {
+  getUsers,
+  createUser,
+  deleteUser,
+  updateUser,
+  userInfo,
+  signUpRender,
+  success,
+  loginRender,
+};
