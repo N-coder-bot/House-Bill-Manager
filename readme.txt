@@ -18,4 +18,4 @@ DATABASE---
 Database used here is Mongodb.
 
 Current Work in Progress...
-Todo: Need to add category to each Product and calculate monthly bill.
+Todo: Add monthly bill calculated to each user.
