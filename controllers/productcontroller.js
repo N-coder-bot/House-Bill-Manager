@@ -9,6 +9,7 @@ const addProduct = async (req, res) => {
       user: user.id,
       name: req.body.name,
       price: req.body.price,
+      category: req.body.category,
     });
     await product.save();
     res.json({ product });
@@ -48,10 +49,26 @@ const getProductById = async (req, res) => {
 const productForm = (req, res) => {
   res.render("productadd");
 };
+//6. calculate Monthly Bill.
+const calculateBill = async (req, res) => {
+  const user = req.user;
+  try {
+    if (!user) throw "Please sign in to continue...";
+    const products = await Product.find({ user: user.id });
+    let amount = 0;
+    products.forEach((product) => {
+      amount += product.price;
+    });
+    res.json({ TotalBillAmount: amount });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
 module.exports = {
   addProduct,
   userProducts,
   getProducts,
   getProductById,
   productForm,
+  calculateBill,
 };
