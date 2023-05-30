@@ -25,7 +25,7 @@ const loginRender = (req, res) => {
 };
 //5. redirect if successfully logged in.
 const success = (req, res) => {
-  res.redirect("/user");
+  res.redirect("/users/user");
 };
 //6. read all users.
 const getUsers = async (req, res) => {
