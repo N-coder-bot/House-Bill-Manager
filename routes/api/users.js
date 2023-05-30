@@ -13,27 +13,39 @@ const {
   updateUser,
 } = require("../../controllers/usercontroller");
 
+const {
+  addProduct,
+  userProducts,
+  productForm,
+} = require("../../controllers/productcontroller");
+
 //USER SPECIFIC ROUTES-----
 //1. user information.
 router.get("/user", userInfo);
 //2. user signup form.
-router.get("/signup", signUpRender);
+router.get("/user/signup", signUpRender);
 //3. user creation.
-router.post("/signup", createUser);
+router.post("/user/signup", createUser);
 //4. user login from.
-router.get("/login/password", loginRender);
+router.get("/user/login/password", loginRender);
 //5. user authentication using passport.
 router.post(
-  "/login/password",
+  "/user/login/password",
   passport.authenticate("login", {
-    failureRedirect: "/login/password",
+    failureRedirect: "users/user/login/password",
     failureMessage: true,
   }),
   success
 );
+//6. user add product.
+router.post("/user/product/add", addProduct);
+//7. User get products.
+router.get("/user/products", userProducts);
+//8. User Product Form.
+router.get("/user/product/add", productForm);
 //GENERAL USER ROUTES---.
 //1. get all users.
-router.get("/users", getUsers);
+router.get("/", getUsers);
 //2. delete a user by name.
 router.delete("/user/name", deleteUser);
 //3. update user's detaul.
