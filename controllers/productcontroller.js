@@ -13,6 +13,7 @@ const addProduct = async (req, res) => {
     await product.save();
     res.json({ product });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: err });
   }
 };
