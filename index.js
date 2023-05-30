@@ -7,6 +7,8 @@ const moment = require("moment"); //for date formatting.
 const passport = require("passport");
 const session = require("express-session"); // for session creation.
 
+const Product = require("./models/Product");
+
 require("./auth/auth");
 require("./config/passport");
 require("dotenv").config();
@@ -50,6 +52,33 @@ app.use(passport.authenticate("session"));
 //User Routes.
 app.use("/", require("./routes/api/users"));
 
+app.post("/user/product/add", async (req, res) => {
+  const user = req.user; //signed in user.
+  console.log(user);
+  try {
+    if (!user) throw "Please Sign in to add a Product";
+
+    const product = new Product({
+      user: user.id,
+      name: req.body.name,
+      price: req.body.price,
+    });
+    await product.save();
+    res.json({ product });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+});
+app.get("/user/product", async (req, res) => {
+  try {
+    if (!req.user) throw "Please sign in first!";
+    const user = req.user;
+    const products = await Product.find({ user: user.id }).exec();
+    res.json({ products: products });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+});
 app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`);
 });
