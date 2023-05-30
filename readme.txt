@@ -3,4 +3,4 @@ stores a user's information on database, with their information for calculating 
 
 Current Work in Progress...
 
-Todo: Add Product Schema and Join user to CORRESPONDING PRODUCT.
+Todo: Refactor Product Schema code, routes and controllers related to product schema.
