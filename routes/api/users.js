@@ -17,6 +17,7 @@ const {
   addProduct,
   userProducts,
   productForm,
+  calculateBill,
 } = require("../../controllers/productcontroller");
 
 //USER SPECIFIC ROUTES-----
@@ -43,6 +44,8 @@ router.post("/user/product/add", addProduct);
 router.get("/user/products", userProducts);
 //8. User Product Form.
 router.get("/user/product/add", productForm);
+//9. Calculate Bill.
+router.get("/user/products/bill", calculateBill);
 //GENERAL USER ROUTES---.
 //1. get all users.
 router.get("/", getUsers);
