@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo"); //for session store.
@@ -16,6 +17,9 @@ require("dotenv").config();
 //setting middlewares for request parsing.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+//setting cors middleware.
+app.use(cors());
 
 //view engine setup middlewares.
 app.set("views", path.join(__dirname, "views"));
