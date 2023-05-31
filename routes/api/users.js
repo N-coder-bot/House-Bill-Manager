@@ -33,7 +33,7 @@ router.get("/user/login/password", loginRender);
 router.post(
   "/user/login/password",
   passport.authenticate("login", {
-    failureRedirect: "users/user/login/password",
+    failureRedirect: "/users/user",
     failureMessage: true,
   }),
   success
