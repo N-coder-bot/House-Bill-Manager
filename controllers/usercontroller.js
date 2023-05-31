@@ -3,7 +3,6 @@ const moment = require("moment");
 
 //1. get userinfo.
 const userInfo = (req, res) => {
-  // console.log(req.user);
   res.json({ user: req.user });
 };
 //2. render signup page.
@@ -15,6 +14,7 @@ const createUser = async (req, res) => {
   const user = await User.create({
     ...req.body,
     createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+    billAmount: 0,
   });
   // console.log(user);
   res.json({ user: user });
