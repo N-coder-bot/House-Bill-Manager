@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-
+const User = require("../models/User");
 //1. Add Product to a specific user.
 const addProduct = async (req, res) => {
   const user = req.user; //signed in user.
@@ -10,6 +10,7 @@ const addProduct = async (req, res) => {
       name: req.body.name,
       price: req.body.price,
       category: req.body.category,
+      isCalculated: false,
     });
     await product.save();
     res.json({ product });
@@ -51,16 +52,24 @@ const productForm = (req, res) => {
 };
 //6. calculate Monthly Bill.
 const calculateBill = async (req, res) => {
-  const user = req.user;
+  const user = await User.findById(req.user.id);
   try {
     if (!user) throw "Please sign in to continue...";
     const products = await Product.find({ user: user.id });
-    let amount = 0;
-    products.forEach((product) => {
-      amount += product.price;
+    let totalBillAmount = user.billAmount;
+    products.forEach(async (product) => {
+      if (product.isCalculated != true) {
+        totalBillAmount += product.price;
+        // console.log("Total Bill Amount:", totalBillAmount);
+        product.isCalculated = true;
+        await product.save();
+      }
     });
-    res.json({ TotalBillAmount: amount });
+    user.billAmount = totalBillAmount;
+    await user.save();
+    res.json({ user });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: err });
   }
 };
