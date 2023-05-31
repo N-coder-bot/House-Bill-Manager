@@ -6,7 +6,6 @@ const {
   userInfo,
   signUpRender,
   createUser,
-  loginRender,
   success,
   getUsers,
   deleteUser,
@@ -28,12 +27,12 @@ router.get("/user/signup", signUpRender);
 //3. user creation.
 router.post("/user/signup", createUser);
 //4. user login from.
-router.get("/user/login/password", loginRender);
+// router.get("/user/login/password", loginRender);
 //5. user authentication using passport.
 router.post(
   "/user/login/password",
   passport.authenticate("login", {
-    failureRedirect: "/users/user",
+    failureRedirect: "/users/user/login/password",
     failureMessage: true,
   }),
   success
