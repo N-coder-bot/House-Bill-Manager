@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../../models/User");
 const {
   userInfo,
-  signUpRender,
+  // signUpRender,
   createUser,
   success,
   getUsers,
@@ -23,7 +23,7 @@ const {
 //1. user information.
 router.get("/user", userInfo);
 //2. user signup form.
-router.get("/user/signup", signUpRender);
+// router.get("/user/signup", signUpRender);
 //3. user creation.
 router.post("/user/signup", createUser);
 //4. user login from.

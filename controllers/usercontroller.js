@@ -6,9 +6,9 @@ const userInfo = (req, res) => {
   res.json({ user: req.user });
 };
 //2. render signup page.
-const signUpRender = (req, res) => {
-  res.render("signup");
-};
+// const signUpRender = (req, res) => {
+//   res.render("signup");
+// };
 //3. create user in the database.
 const createUser = async (req, res) => {
   const user = await User.create({
@@ -71,6 +71,6 @@ module.exports = {
   deleteUser,
   updateUser,
   userInfo,
-  signUpRender,
+  // signUpRender,
   success,
 };
