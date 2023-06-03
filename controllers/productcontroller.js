@@ -6,7 +6,7 @@ const addProduct = async (req, res) => {
   try {
     if (!user) throw "Please Sign in to add a Product";
     const product = new Product({
-      user: user.id,
+      user: user._id,
       name: req.body.name,
       price: req.body.price,
       category: req.body.category,
@@ -24,7 +24,7 @@ const userProducts = async (req, res) => {
   try {
     if (!req.user) throw "Please sign in first!";
     const user = req.user;
-    const products = await Product.find({ user: user.id }).exec();
+    const products = await Product.find({ user: user._id }).exec();
     res.json({ products: products });
   } catch (err) {
     res.status(400).json({ error: err });
@@ -52,10 +52,10 @@ const productForm = (req, res) => {
 };
 //6. calculate Monthly Bill.
 const calculateBill = async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = req.user;
   try {
     if (!user) throw "Please sign in to continue...";
-    const products = await Product.find({ user: user.id });
+    const products = await Product.find({ user: user._id });
     let totalBillAmount = user.billAmount;
     products.forEach(async (product) => {
       if (product.isCalculated != true) {
