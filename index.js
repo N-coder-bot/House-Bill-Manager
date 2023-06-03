@@ -17,14 +17,16 @@ require("dotenv").config();
 //setting middlewares for request parsing.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
 //setting cors middleware.
-app.use(cors());
+app.use(cors(corsOptions));
 
 //view engine setup middlewares.
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT || 8000;
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority`;
@@ -33,7 +35,7 @@ const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@users.qal
 require("./config/database");
 
 //storing sessions in database under "sessions" collection.
-const sessionstore = new MongoStore({
+const sessionstore = MongoStore.create({
   mongoUrl: uri,
   collectionName: "sessions",
 });
@@ -47,13 +49,15 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
+    name: "naman",
   })
 );
-//initialise passport verification and authentication.
+// initialise passport verification and authentication.
 app.use(passport.initialize());
-app.use(passport.authenticate("session"));
+app.use(passport.session());
 
 //User Routes.
+
 app.use("/users", require("./routes/api/users"));
 //Product Routes.
 app.use("/products", require("./routes/api/products"));
