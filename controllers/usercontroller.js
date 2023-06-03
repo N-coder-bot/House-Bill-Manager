@@ -6,9 +6,9 @@ const userInfo = (req, res) => {
   res.json({ user: req.user });
 };
 //2. render signup page.
-// const signUpRender = (req, res) => {
-//   res.render("signup");
-// };
+const signUpRender = (req, res) => {
+  res.render("signup");
+};
 //3. create user in the database.
 const createUser = async (req, res) => {
   const user = await User.create({
@@ -20,12 +20,19 @@ const createUser = async (req, res) => {
   res.json({ user: user });
 };
 //4. render login page.
-// const loginRender = (req, res) => {
-//   res.render("login");
-// };
+const loginRender = (req, res) => {
+  res.render("login");
+};
 //5. redirect if successfully logged in.
 const success = (req, res) => {
-  res.json({ user: req.user });
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+  );
+  res.redirect(303, "/users/login-success");
 };
 //6. read all users.
 const getUsers = async (req, res) => {
@@ -71,6 +78,7 @@ module.exports = {
   deleteUser,
   updateUser,
   userInfo,
-  // signUpRender,
+  loginRender,
+  signUpRender,
   success,
 };
