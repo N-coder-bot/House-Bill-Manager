@@ -46,7 +46,7 @@ router.get("/login-success", (req, res) => {
 //logout.
 router.get("/logout", isAuth, (req, res) => {
   req.logout();
-  res.redirect("/users");
+  res.send("logged out successfully");
 });
 //6. user add product.
 router.post("/product/add", isAuth, addProduct);
@@ -65,7 +65,6 @@ router.delete("/name", deleteUser);
 router.put("/name", isAuth, updateUser);
 //4. is in session?
 router.get("/checkAuth", (req, res) => {
-  console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
     res.json({ msg: "logged in" });
   } else {
