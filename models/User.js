@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { model, Schema } = mongoose;
+const { Schema, model } = mongoose;
 
-//Defining User Schema.
+// Defining User Schema.
 const UserSchema = new Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
+  products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
   createdAt: {
     type: String,
   },
@@ -18,19 +19,35 @@ const UserSchema = new Schema({
   },
 });
 
-//hashing the password with salt value 10.
+// Hashing the password with a salt value of 10 before saving.
 UserSchema.pre("save", async function (next) {
-  const user = this;
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
-  next();
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  try {
+    const existingUser = await User.findOne({ username: this.username });
+    if (existingUser) {
+      throw new Error("Username already exists");
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(this.password, salt);
+    this.password = hash;
+    next();
+  } catch (error) {
+    return next(error);
+  }
 });
 
-//adding Schema Method IsValidPassword to ensure that
-//the user trying to login has the correct credentials.
+// Adding a Schema method "isValidPassword" to ensure that
+// the user trying to login has the correct credentials.
 UserSchema.methods.isValidPassword = async function (password) {
-  const user = this;
-  const compare = await bcrypt.compare(password, user.password);
-  return compare;
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw error;
+  }
 };
+
 module.exports = model("User", UserSchema);
