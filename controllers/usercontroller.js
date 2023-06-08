@@ -11,14 +11,20 @@ const signUpRender = (req, res) => {
 };
 //3. create user in the database.
 const createUser = async (req, res) => {
-  const user = await User.create({
-    ...req.body,
-    createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
-    billAmount: 0,
-  });
-  // console.log(user);
-  res.json({ user: user });
+  try {
+    const user = new User({
+      ...req.body,
+      createdAt: moment().format("MMMM Do YYYY, h:mm:ss a"),
+      billAmount: 0,
+    });
+
+    await user.save();
+    res.json({ user: user });
+  } catch (err) {
+    res.status(401).json({ error: err });
+  }
 };
+
 //4. render login page.
 const loginRender = (req, res) => {
   res.render("login");
