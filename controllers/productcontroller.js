@@ -13,7 +13,10 @@ const addProduct = async (req, res) => {
       isCalculated: false,
     });
     await product.save();
+    user.products.push(product); //adding product to user's products array.
+    await user.save();
     res.json({ product });
+    // next();
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err });
@@ -24,15 +27,18 @@ const userProducts = async (req, res) => {
   try {
     if (!req.user) throw "Please sign in first!";
     const user = req.user;
-    const products = await Product.find({ user: user._id }).exec();
-    res.json({ products: products });
+    await user.populate("products");
+    // console.log(user.products);
+    res.json({ products: user.products });
   } catch (err) {
     res.status(400).json({ error: err });
   }
 };
-//3. get all the products in the database.
+
+// 3. get all the products in the database.
 const getProducts = async (req, res) => {
-  const products = await Product.find({});
+  const user = req.user;
+  const products = await user.populate("products").products;
   res.json({ products: products });
 };
 //4. get Product By Id.
@@ -53,18 +59,19 @@ const productForm = (req, res) => {
 //6. calculate Monthly Bill.
 const calculateBill = async (req, res) => {
   const user = req.user;
+  // console.log(user);
+  await user.populate("products");
+  const products = user.products;
   try {
     if (!user) throw "Please sign in to continue...";
-    const products = await Product.find({ user: user._id });
     let totalBillAmount = user.billAmount;
-    products.forEach(async (product) => {
-      if (product.isCalculated != true) {
+    for (const product of products) {
+      if (product.isCalculated !== true) {
         totalBillAmount += product.price;
-        // console.log("Total Bill Amount:", totalBillAmount);
         product.isCalculated = true;
         await product.save();
       }
-    });
+    }
     user.billAmount = totalBillAmount;
     await user.save();
     res.json({ user });
@@ -73,6 +80,7 @@ const calculateBill = async (req, res) => {
     res.status(400).json({ error: err });
   }
 };
+
 module.exports = {
   addProduct,
   userProducts,
