@@ -21,7 +21,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5173",
     "https://billease-h68y.onrender.com",
-    "https://houbse-bill-manager-front-end.vercel.app/",
+    "https://houbse-bill-manager-front-end.vercel.app",
   ],
   credentials: true,
 };
