@@ -19,6 +19,7 @@ const {
   userProducts,
   productForm,
   calculateBill,
+  deleteProductById,
 } = require("../../controllers/productcontroller");
 
 //USER SPECIFIC ROUTES-----
@@ -56,6 +57,8 @@ router.get("/products", isAuth, userProducts);
 router.get("/product/add", isAuth, productForm);
 //9. Calculate Bill.
 router.get("/products/bill", isAuth, calculateBill);
+//10.product delete
+router.delete("/product/delete", isAuth, deleteProductById);
 //GENERAL USER ROUTES---.
 //1. get all users.
 router.get("/", getUsers);
@@ -66,7 +69,7 @@ router.put("/name", isAuth, updateUser);
 //4. is in session?
 router.get("/checkAuth", (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({ msg: "logged in" });
+    res.json({ user: req.user, msg: "logged in" });
   } else {
     res.json({ msg: "not logged in" });
   }
