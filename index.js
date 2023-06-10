@@ -18,7 +18,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://billEaseExpress.onrender.com"],
+  origin: ["http://localhost:5173", "https://billease.onrender.com"],
   credentials: true,
 };
 //setting cors middleware.
