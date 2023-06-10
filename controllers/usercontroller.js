@@ -32,13 +32,7 @@ const loginRender = (req, res) => {
 };
 //5. redirect if successfully logged in.
 const success = (req, res) => {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
-  );
+  console.log("YEEEHA");
   console.log(req.user);
   res.status(201).json({ user: req.user });
 };
