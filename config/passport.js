@@ -2,6 +2,7 @@ const passport = require("passport");
 const User = require("../models/User");
 //serializeUser is called just after a user is logged in successfully.
 passport.serializeUser((user, done) => {
+  console.log(user);
   console.log("mein serialised mein hu");
   done(null, user.id);
 });
