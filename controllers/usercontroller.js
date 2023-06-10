@@ -10,7 +10,7 @@ const signUpRender = (req, res) => {
   res.render("signup");
 };
 //3. create user in the database.
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   try {
     const user = new User({
       ...req.body,
@@ -21,7 +21,9 @@ const createUser = async (req, res) => {
     await user.save();
     res.json({ user: user });
   } catch (err) {
-    res.status(401).json({ error: err });
+    console.log(err);
+    res.status(401).json({ err });
+    next();
   }
 };
 
