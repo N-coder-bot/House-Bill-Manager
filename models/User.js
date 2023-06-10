@@ -26,7 +26,9 @@ UserSchema.pre("save", async function (next) {
   }
 
   try {
-    const existingUser = await User.findOne({ username: this.username });
+    const existingUser = await this.model("User").findOne({
+      username: this.username,
+    });
     if (existingUser) {
       throw new Error("Username already exists");
     }
