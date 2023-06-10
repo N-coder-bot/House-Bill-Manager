@@ -41,6 +41,8 @@ router.post(
   success
 );
 router.get("/login-success", (req, res) => {
+  console.log(req.session);
+  console.log("login success se log");
   res.json({ user: req.user });
 });
 
@@ -68,6 +70,7 @@ router.delete("/name", deleteUser);
 router.put("/name", isAuth, updateUser);
 //4. is in session?
 router.get("/checkAuth", (req, res) => {
+  console.log("hi");
   if (req.isAuthenticated()) {
     res.json({ user: req.user, msg: "logged in" });
   } else {
