@@ -39,7 +39,8 @@ const success = (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
-  res.redirect(303, "/users/login-success");
+  console.log(req.user);
+  res.status(201).json({ user: req.user });
 };
 //6. read all users.
 const getUsers = async (req, res) => {

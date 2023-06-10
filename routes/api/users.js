@@ -40,10 +40,10 @@ router.post(
   }),
   success
 );
-router.get("/login-success", (req, res) => {
+router.get("/login-success", (req, res, next) => {
   console.log(req.session);
   console.log("login success se log");
-  res.json({ user: req.user });
+  next();
 });
 
 //logout.
