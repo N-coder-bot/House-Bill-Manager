@@ -1,4 +1,3 @@
-const { boolean } = require("joi");
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 const categories = ["grocery", "healthcare", "others", "clothing"];

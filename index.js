@@ -18,7 +18,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://BillEase"],
   credentials: true,
 };
 //setting cors middleware.
@@ -29,8 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 const PORT = process.env.PORT || 8000;
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority`;
-
+const uri = process.env.URI;
 // connecting to mongodb database.
 require("./config/database");
 

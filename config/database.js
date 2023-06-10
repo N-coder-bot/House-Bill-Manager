@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@users.qaljg9a.mongodb.net/?retryWrites=true&w=majority`;
+const uri = process.env.URI;
 
 mongoose.connect(uri, { autoIndex: false });
 const connection = mongoose.connection;
