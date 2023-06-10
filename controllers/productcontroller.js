@@ -34,7 +34,6 @@ const userProducts = async (req, res) => {
     res.status(400).json({ error: err });
   }
 };
-
 // 3. get all the products in the database.
 const getProducts = async (req, res) => {
   const user = req.user;
@@ -80,6 +79,18 @@ const calculateBill = async (req, res) => {
     res.status(400).json({ error: err });
   }
 };
+//7. delete a product by Id.
+const deleteProductById = async (req, res) => {
+  const user = req.user;
+  const price = req.body.price;
+  await Product.deleteOne({ _id: req.body._id });
+  if (user.billAmount != 0) user.billAmount -= price;
+  user.products = user.products.filter((product) => {
+    return product != req.body._id;
+  });
+  await user.save();
+  res.status(200).json("successfully deleted");
+};
 
 module.exports = {
   addProduct,
@@ -88,4 +99,5 @@ module.exports = {
   getProductById,
   productForm,
   calculateBill,
+  deleteProductById,
 };
