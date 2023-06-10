@@ -1,7 +1,7 @@
 const { boolean } = require("joi");
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
-const categories = ["grocery", "healthcare", "cosmetics", "clothing"];
+const categories = ["grocery", "healthcare", "others", "clothing"];
 const ProductSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   name: { type: String, required: true },
