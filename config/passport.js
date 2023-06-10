@@ -4,7 +4,7 @@ const User = require("../models/User");
 passport.serializeUser((user, done) => {
   console.log(user);
   console.log("mein serialised mein hu");
-  done(null, user.id);
+  done(null, user._id);
 });
 //STORES OBJECT GIVEN TO DONE INTO THE REQUEST FIELD OF THE REQ,RES SYSTEM.
 passport.deserializeUser(async (userId, done) => {
