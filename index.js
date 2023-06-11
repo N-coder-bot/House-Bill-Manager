@@ -31,7 +31,7 @@ app.use(cors(corsOptions));
 //view engine setup middlewares.
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 8000;
 const uri = process.env.URI;
 // connecting to mongodb database.
@@ -46,8 +46,8 @@ const sessionstore = MongoStore.create({
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: sessionstore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
