@@ -51,6 +51,7 @@ app.use(
     store: sessionstore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "none",
     },
     name: "naman",
   })
