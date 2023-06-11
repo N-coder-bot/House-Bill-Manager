@@ -29,18 +29,7 @@ const corsOptions = {
 };
 //setting cors middleware.
 app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://houbse-bill-manager-front-end.vercel.app"
-  );
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept"
-  );
-  next();
-});
+
 //view engine setup middlewares.
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -76,7 +65,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //User Routes.
-
+app.use((req, res, next) => {
+  res.setHeader("Set-Cookie", req.session.cookie);
+  res.status(200);
+  next();
+});
 app.use("/users", require("./routes/api/users"));
 //Product Routes.
 app.use("/products", require("./routes/api/products"));
