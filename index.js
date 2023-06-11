@@ -18,7 +18,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "https://houbse-bill-manager-front-dz0j6m2h9-n-coder-bot.vercel.app",
+  origin: "https://houbse-bill-manager-front-end.vercel.app",
   credentials: true,
 };
 //setting cors middleware.
