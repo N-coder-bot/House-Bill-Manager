@@ -31,10 +31,10 @@ const loginRender = (req, res) => {
   res.render("login");
 };
 //5. redirect if successfully logged in.
-const success = (req, res) => {
+const success = (req, res, next) => {
   console.log("YEEEHA");
   console.log(req.user);
-  res.status(201).json({ user: req.user });
+  next();
 };
 //6. read all users.
 const getUsers = async (req, res) => {

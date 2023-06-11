@@ -37,10 +37,9 @@ router.post(
   passport.authenticate("login", {
     failureRedirect: "/login-failure",
     successRedirect: "/users/login-success",
-  }),
-  success
+  })
 );
-router.get("/login-success", (req, res) => {
+router.get("/login-success", success, (req, res, next) => {
   console.log(req.session);
   console.log("login success se log");
   res.json({ user: req.user });
@@ -71,6 +70,7 @@ router.put("/name", isAuth, updateUser);
 //4. is in session?
 router.get("/checkAuth", (req, res) => {
   console.log("hi");
+  res.setHeader("Access-Control-Allow-Private-Network", "true");
   if (req.isAuthenticated()) {
     res.json({ user: req.user, msg: "logged in" });
   } else {
