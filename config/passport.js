@@ -13,6 +13,7 @@ passport.deserializeUser(async (userId, done) => {
     console.log(user, "from the Deserialize user");
     done(null, user); //here req.user will store user.
   } catch (err) {
+    console.log(err);
     done(err);
   }
 });
