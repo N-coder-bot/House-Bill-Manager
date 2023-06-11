@@ -7,6 +7,7 @@ const MongoStore = require("connect-mongo"); //for session store.
 const moment = require("moment"); //for date formatting.
 const passport = require("passport");
 const session = require("express-session"); // for session creation.
+const cookieParser = require("cookie-parser");
 
 const Product = require("./models/Product");
 
@@ -17,6 +18,7 @@ require("dotenv").config();
 //setting middlewares for request parsing.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 const corsOptions = {
   // origin: [
   //   "https://houbse-bill-manager-front-end.vercel.app",
