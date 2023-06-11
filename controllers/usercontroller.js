@@ -31,11 +31,11 @@ const loginRender = (req, res) => {
   res.render("login");
 };
 //5. redirect if successfully logged in.
-const success = (req, res, next) => {
-  console.log("YEEEHA");
-  console.log(req.user);
-  next();
-};
+// const success = (req, res, next) => {
+//   console.log("YEEEHA");
+//   console.log(req.user);
+//   next();
+// };
 //6. read all users.
 const getUsers = async (req, res) => {
   try {
@@ -82,5 +82,5 @@ module.exports = {
   userInfo,
   loginRender,
   signUpRender,
-  success,
+  // success,
 };

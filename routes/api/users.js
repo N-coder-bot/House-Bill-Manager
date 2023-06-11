@@ -39,12 +39,13 @@ router.post(
     successRedirect: "/users/login-success",
   })
 );
-router.get("/login-success", success, (req, res, next) => {
-  console.log(req.session);
-  console.log("login success se log");
+router.get("/login-success", (req, res, next) => {
+  // console.log(req.session);
   res.json({ user: req.user });
 });
-
+router.get("/login-failure", (req, res) => {
+  res.json({ msg: "login failed" });
+});
 //logout.
 router.get("/logout", isAuth, (req, res) => {
   req.logout();
@@ -69,7 +70,7 @@ router.delete("/name", deleteUser);
 router.put("/name", isAuth, updateUser);
 //4. is in session?
 router.get("/checkAuth", (req, res) => {
-  console.log("hi");
+  // console.log("hi");
   res.setHeader("Access-Control-Allow-Private-Network", "true");
   if (req.isAuthenticated()) {
     res.json({ user: req.user, msg: "logged in" });
