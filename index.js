@@ -24,7 +24,7 @@ const corsOptions = {
   //   "https://houbse-bill-manager-front-end.vercel.app",
   //   "http://localhost:5173",
   // ],
-  origin: "https://houbse-bill-manager-front-end.vercel.app",
+  origin: "https://houbse-bill-manager-front-7nizndf3g-n-coder-bot.vercel.app",
   credentials: true,
 };
 //setting cors middleware.
